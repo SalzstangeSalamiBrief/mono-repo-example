@@ -1,27 +1,28 @@
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, "./src/index.ts"),
-      name: "react-beautiful-timeline",
-      fileName: (format) => `index.${format}.js`,
+      entry: resolve(__dirname, "src/index.ts"),
+      formats: ["es"],
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
+        entryFileNames: "[name].js",
+        assetFileNames: "assets/[name][extname]",
         globals: {
           react: "React",
-          "react-dom": "ReactDOM",
+          "react-dom": "React-dom",
+          "react/jsx-runtime": "react/jsx-runtime",
         },
       },
     },
     sourcemap: true,
     emptyOutDir: true,
   },
-  plugins: [react(), dts({ rollupTypes: true })],
+  plugins: [react()],
 });
