@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { defineConfig } from "vite";
-
+import tsconfigPaths from "vite-tsconfig-paths";
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
@@ -23,6 +23,8 @@ export default defineConfig({
     },
     sourcemap: true,
     emptyOutDir: true,
+    minify: true,
+    cssMinify: true,
   },
-  plugins: [react()],
+  plugins: [react(), tsconfigPaths({ root: "." })],
 });
